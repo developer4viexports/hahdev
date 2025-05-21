@@ -98,7 +98,7 @@ export default function TenantPlacementSection() {
 
                         <Typography
                             variant="h6"
-                            sx={{ fontWeight: 600, mb: 2, mt:2}}
+                            sx={{ fontWeight: 600, mb: 2, mt: 2 }}
                         >
                             Why Choose Home Away From Home Developments Inc. for Tenant Placement?
                         </Typography>
@@ -108,7 +108,7 @@ export default function TenantPlacementSection() {
                                     <ListItemText
                                         primary={
                                             <Typography variant="body1" sx={{ color: "#333" }}>
-                                                {b}
+                                               <b>-</b> {b}
                                             </Typography>
                                         }
                                     />

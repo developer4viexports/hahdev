@@ -15,6 +15,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import imageSrc from "../assets/images/contactUs.jpg"; // replace with your image path
+import { Facebook, Instagram, WhatsApp } from "@mui/icons-material";
 
 export default function ContactSection() {
     return (
@@ -116,16 +117,36 @@ export default function ContactSection() {
                             </Box>
 
                             {/* Social Icons */}
-                            <Box sx={{ display: 'flex', gap: 2, mt: 4 }}>
-                                <IconButton href="#" sx={{ color: '#555' }}>
-                                    <FacebookIcon />
+                            <Box sx={{ display: 'flex', gap: 1, mt: 4 }}>
+                                <IconButton
+                                    component="a"
+                                    href="https://www.facebook.com/share/1ASUUXUgHf/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    size="small"
+                                    sx={{ color: "#555" }}
+                                >
+                                    <Facebook fontSize="small" />
                                 </IconButton>
-                                <IconButton href="#" sx={{ color: '#555' }}>
-                                    <YouTubeIcon />
+                                <IconButton
+                                    component="a"
+                                    href="https://www.instagram.com/thehah.ca/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    size="small"
+                                    sx={{ color: "#555" }}
+                                >
+                                    <Instagram fontSize="small" />
                                 </IconButton>
-
-                                <IconButton href="#" sx={{ color: '#555' }}>
-                                    <WhatsAppIcon />
+                                <IconButton
+                                    component="a"
+                                    href="https://wa.me/17054658787"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    size="small"
+                                    sx={{ color: "#555" }}
+                                >
+                                    <WhatsApp fontSize="small" />
                                 </IconButton>
                             </Box>
                         </Box>
