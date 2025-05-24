@@ -25,7 +25,7 @@ function OwnerInfo({ owner }) {
                 '&:hover': { opacity: 0.95 },
                 transition: 'opacity 0.3s ease',
             }}
-            onClick={() => navigate('/blogs')}
+            onClick={() => navigate('/about')}
         >
             <Container maxWidth="lg">
                 <Grid container spacing={4} alignItems="center">
