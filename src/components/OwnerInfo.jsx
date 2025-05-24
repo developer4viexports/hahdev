@@ -8,18 +8,24 @@ import {
     useTheme,
     useMediaQuery,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 // import ownerImg from '../assets/images/owner.png';
 
 function OwnerInfo({ owner }) {
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+    const navigate = useNavigate();
 
     return (
         <Box
             sx={{
                 bgcolor: 'black',
                 color: 'white',
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.95 },
+                transition: 'opacity 0.3s ease',
             }}
+            onClick={() => navigate('/blogs')}
         >
             <Container maxWidth="lg">
                 <Grid container spacing={4} alignItems="center">
