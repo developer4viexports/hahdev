@@ -105,7 +105,7 @@ export default function Services() {
             variant="subtitle1"
             sx={{ maxWidth: 600, fontSize: { xs: "1rem", sm: "1.125rem" } }}
           >
-            Seamless Property Management with Home Away From Home Developments Inc. Developments!
+            Seamless Property Management with Home Away From Home Developments Inc.
             <br />
             Serving the Niagara Region with top-tier management solutions!
           </Typography>

@@ -62,7 +62,7 @@ function Footer2() {
           sx={{ mt: { xs: 4, md: 2 } }}  // increased top margin on mobile to 32px
         >
           © 2025 Home Away From Home Developments INC. · Premier Airbnb Hosting
-          & Property Management in Ontario. All Rights Reserved.
+          & Property Management. All Rights Reserved.
         </Typography>
       </Container>
     </Box>
