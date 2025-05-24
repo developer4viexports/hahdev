@@ -40,20 +40,20 @@ function Footer2() {
               our team will reach out to you shortly. Thank you for choosing.
             </Typography>
           </Box>
-                        <Box
-                          component="img"
-                          src={logo}
-                          alt="Logo"
-                          sx={{
-                        height: { xs: 40, md: 50 },
-                        width: "auto",
-                        maxWidth: { xs: 180, md: 250 },
-                        mx: { xs: "auto", md: 0 },
-                        display: "block",
-                        scale: { xs: 1.8, md: 1 },  // changed from 0 → 1 for desktop visibility
-                        }}
-                />
-                    </Box>
+          <Box
+            component="img"
+            src={logo}
+            alt="Logo"
+            sx={{
+              height: { xs: 40, md: 50 },
+              width: "auto",
+              maxWidth: { xs: 180, md: 250 },
+              mx: { xs: "auto", md: 0 },
+              display: "block",
+              scale: { xs: 1.8, md: 1 },  // changed from 0 → 1 for desktop visibility
+            }}
+          />
+        </Box>
 
 
         <Typography
@@ -62,7 +62,7 @@ function Footer2() {
           sx={{ mt: { xs: 4, md: 2 } }}  // increased top margin on mobile to 32px
         >
           © 2025 Home Away From Home Developments INC. · Premier Airbnb Hosting
-          & Property Management. All Rights Reserved.
+          & Property Management.<br /> All Rights Reserved.
         </Typography>
       </Container>
     </Box>

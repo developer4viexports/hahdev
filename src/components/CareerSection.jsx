@@ -230,7 +230,7 @@ export default function CareerSection() {
           </Box>
           <Typography variant="caption" color="white" sx={{ mt: 2 }}>
             © 2025 Home Away From Home Developments INC. · Premier Airbnb Hosting
-            & Property Management. All Rights Reserved.
+            & Property Management.<br /> All Rights Reserved.
           </Typography>
         </Container>
       </Box>
