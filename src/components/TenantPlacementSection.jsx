@@ -23,7 +23,7 @@ export default function TenantPlacementSection() {
         },
         {
             title: "Legally Compliant Lease Execution",
-            text: "Protection starts with the paperwork. Our expert team, including licensed paralegals, prepares and executes detailed tenancy agreements tailored to Ontario rental laws. Every agreement includes professionally drafted appendices to safeguard your rights as a landlord.",
+            text: "Protection starts with the paperwork. Our expert team, including licensed paralegals, prepares and executes detailed tenancy agreements tailored to rental laws. Every agreement includes professionally drafted appendices to safeguard your rights as a landlord.",
         },
     ];
 

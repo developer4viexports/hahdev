@@ -12,6 +12,7 @@ import {
 import img1 from "../assets/images/service1.jpg";
 import img2 from "../assets/images/service2.jpg";
 import img3 from "../assets/images/service3.jpg";
+import { useNavigate } from "react-router-dom";
 
 // Sample blog post data
 const posts = [
@@ -42,10 +43,12 @@ const posts = [
 ];
 
 export default function LatestPostsSection() {
+  const navigate = useNavigate();
+
   return (
     <Box component="section" sx={{ backgroundColor: "#f9f9f9", py: { xs: 6, md: 8 } }}>
       <Container maxWidth="lg">
-        {/* Overline + Heading */}
+        {/* Heading */}
         <Box textAlign="center" sx={{ mb: 4 }}>
           <Typography
             variant="overline"
@@ -78,7 +81,7 @@ export default function LatestPostsSection() {
                   height: "100%",
                 }}
               >
-                {/* Image + Date Badge */}
+                {/* Image with date badge */}
                 <Box sx={{ position: "relative" }}>
                   <CardMedia
                     component="img"
@@ -88,10 +91,8 @@ export default function LatestPostsSection() {
                       width: "100%",
                       height: 200,
                       objectFit: "cover",
-                      display: "block",
                     }}
                   />
-                  {/* Date Badge in top-right corner */}
                   <Box
                     sx={{
                       position: "absolute",
@@ -102,42 +103,39 @@ export default function LatestPostsSection() {
                       px: 2,
                       py: 1,
                       borderRadius: 1,
+                      fontSize: "0.75rem",
                     }}
                   >
                     {post.date}
                   </Box>
                 </Box>
 
-                {/* Card Content */}
+                {/* Post Content */}
                 <CardContent sx={{ p: 2, display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                  {/* Meta: Comments, author */}
                   <Typography variant="caption" sx={{ color: "#999" }}>
-                    {post.commentsCount} Comments
+                    {post.commentsCount} Comment{post.commentsCount > 1 ? "s" : ""}
                     <span style={{ margin: "0 6px" }}>•</span>
                     by: {post.author}
                   </Typography>
 
-                  {/* Post Title */}
                   <Typography variant="h6" sx={{ fontWeight: 600, mt: 1, mb: 2 }}>
                     {post.title}
                   </Typography>
 
-                  {/* Read More Link */}
                   <Box
+                    onClick={() => navigate("/blogs")}
                     sx={{
+                      mt: "auto",
                       display: "flex",
                       alignItems: "center",
-                      gap: 1,
-                      cursor: "pointer",
                       color: "#000",
-                      fontSize: "0.875rem",
-                      mt: "auto",
+                      cursor: "pointer",
+                      fontWeight: 500,
+                      "&:hover": { textDecoration: "underline" },
                     }}
                   >
-                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                      READ MORE
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                    <Typography variant="body2">READ MORE</Typography>
+                    <Typography variant="body2" sx={{ fontWeight: "bold", ml: 1 }}>
                       →
                     </Typography>
                   </Box>
@@ -151,6 +149,7 @@ export default function LatestPostsSection() {
         <Box textAlign="center" sx={{ mt: 4 }}>
           <Button
             variant="contained"
+            onClick={() => navigate("/blog")}
             sx={{
               borderRadius: 2,
               backgroundColor: "#000",

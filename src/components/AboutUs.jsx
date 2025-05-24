@@ -27,6 +27,7 @@ export default function AboutUs({ data, direction = 'row', image }) {
                 width: "100%",
                 maxHeight: { sx: "300px", md: "400px" },
                 borderRadius: 2, // Rounded corners
+                borderBottomRightRadius: "60px",
                 objectFit: "cover",
               }}
             />
