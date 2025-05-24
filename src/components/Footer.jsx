@@ -87,14 +87,21 @@ export default function Footer({ bgImg }) {
                                 <Typography sx={{ mb: 2 }}>
                                     <strong>Address</strong>
                                     <br />
-                                    {/* <a
-                                        href="https://goo.gl/maps/YourCustomMapLink"
+                                    <a
+                                        href="https://maps.google.com?q=4635+Queen+St+Niagara+Falls+ON+L2E+2L7"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        style={{ color: "#F5E9D6", textDecoration: "underline" }}
-                                    > */}
-                                    4635 Queen St, Niagara Falls, ON L2E 2L7
-                                    {/* </a> */}
+                                        style={{
+                                            color: "#F5E9D6",
+                                            textDecoration: "none",
+                                            display: "inline-block",
+                                            mt: 0.5,
+                                            fontSize: '0.95rem',
+                                            lineHeight: 1.5
+                                        }}
+                                    >
+                                        4635 Queen St, Niagara Falls, ON L2E 2L7<br />
+                                    </a>
                                 </Typography>
 
                                 <Box display="flex" mt={2}>
@@ -273,7 +280,7 @@ export default function Footer({ bgImg }) {
 
 
 
-        </Box>
+        </Box >
     );
 }
 
