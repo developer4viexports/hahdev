@@ -103,7 +103,7 @@ export default function Services() {
           >
             Seamless Property Management with Home Away From Home Developments Inc.
             <br />
-            Serving the Niagara and GTA with top-tier management solutions!
+            Serving the Niagara and GTA Region with top-tier management solutions!
           </Typography>
         </Box>
 
