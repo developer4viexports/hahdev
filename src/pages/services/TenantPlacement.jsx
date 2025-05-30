@@ -11,7 +11,7 @@ function TenantPlacement() {
     return (
         <>
             <Navbar />
-            <ServiceHero heading={<>Tenant Placement<br /> </>} subheading="We match keys to doors and dreams to leases." bg={bg}
+            <ServiceHero heading={<>Tenant Placement<br /> </>} subheading="We match keys to doors and dreams to leases." bg={bg} background='#754F55'
             />
             <TenantPlacementSection />
             <Footer bgImg={footerImg} />

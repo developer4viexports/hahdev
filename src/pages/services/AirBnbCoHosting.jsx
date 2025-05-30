@@ -14,7 +14,7 @@ function AirBnbCoHosting() {
     return (
         <>
             <Navbar />
-            <ServiceHero heading={<>AirBnb Co-Hosting<br /> </>} subheading="We host the hustle. You just collect the wins." bg={bg}
+            <ServiceHero heading={<>AirBnb Co-Hosting<br /> </>} subheading="We host the hustle. You just collect the wins." bg={bg} background='#2F546F'
             />
             <CoHostingSection coHosting={coHosting} />
             <WhatWeOfferSection wosImg={wosImg} />

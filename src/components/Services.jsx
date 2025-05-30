@@ -24,7 +24,7 @@ const services = [
   },
   {
     img: img2,
-    title: "Long-Term Property Management",
+    title: "Long-Term Property Management (LTR)",
     desc:
       "From tenant screening and lease management to rent collection and regular inspections, our comprehensive long-term management ensures your property is always in good hands and your returns are stress-free.",
     path: "/service/ltrm",
@@ -103,7 +103,7 @@ export default function Services() {
           >
             Seamless Property Management with Home Away From Home Developments Inc.
             <br />
-            Serving the Niagara Region with top-tier management solutions!
+            Serving the Niagara and GTA with top-tier management solutions!
           </Typography>
         </Box>
 

@@ -100,7 +100,22 @@ export default function Footer({ bgImg }) {
                                             lineHeight: 1.5
                                         }}
                                     >
-                                        4635 Queen St, Niagara Falls, ON L2E 2L7<br />
+                                        - 4635 Queen St, Niagara Falls, ON L2E 2L7<br />
+                                    </a>
+                                    <a
+                                        href="https://maps.app.goo.gl/UwpEPwci2EoBoyQk7?g_st=i&utm_campaign=ac-im"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            color: "#F5E9D6",
+                                            textDecoration: "none",
+                                            display: "inline-block",
+                                            mt: 0.5,
+                                            fontSize: '0.95rem',
+                                            lineHeight: 1.5
+                                        }}
+                                    >
+                                        - 6725 Millcreek Dr Unit 1, Mississauga, ON L5N 5V3, Canada<br />
                                     </a>
                                 </Typography>
 

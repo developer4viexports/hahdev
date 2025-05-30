@@ -10,7 +10,7 @@ function PropertyMaintenance() {
     return (
         <>
             <Navbar />
-            <ServiceHero heading={<> Property Maintenance<br /> </>} subheading="We fix more than homes—we protect your peace." bg={bg}
+            <ServiceHero heading={<> Property Maintenance<br /> </>} subheading="We fix more than homes—we protect your peace." bg={bg} background='#4C4A45'
             />
             <MaintenanceServices />
             <Footer bgImg={footerImg} />

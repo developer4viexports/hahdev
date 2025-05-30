@@ -59,11 +59,11 @@ function STRM() {
     return (
         <>
             <Navbar />
-            <ServiceHero heading={<> Short-Term Rental<br /> Management </>} subheading="Fast bookings. Flawless stays. Full control." bg={bg} />
+            <ServiceHero heading={<> Short-Term Rental<br /> Management </>} subheading="Fast bookings. Flawless stays. Full control." bg={bg} background="#0D294C" />
             <AboutUs data={data} direction={'row-reverse'} image={strm1} />
             <ServicesAccordion services={services} sectionKey='STR' accordioanImg={accordionImg} />
             <WhyChooseUs points={points} wcuImag={wcuImag} />
-            <Footer bgImg={footerImg}/>
+            <Footer bgImg={footerImg} />
         </>
     )
 }

@@ -98,21 +98,39 @@ export default function ContactSection() {
                             <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1, gap: 1 }}>
                                 <LocationOnIcon fontSize="small" sx={{ mt: 0.2 }} />
                                 <Box>
-                                    <Typography variant="body1" sx={{ display: 'inline', fontWeight: 500 }}>
+                                    <Typography variant="body1" sx={{ display: 'block', fontWeight: 500 }}>
                                         Address : &nbsp;
                                     </Typography>
-                                    <Typography variant="body1" sx={{ display: 'inline', color: '#333' }}>
-                                        4635 Queen St Niagara Falls, ON L2E 2L7
-                                    </Typography>
-                                    <br />
-                                    <Link
+                                    <a
                                         href="https://maps.google.com?q=4635+Queen+St+Niagara+Falls+ON+L2E+2L7"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        sx={{ fontSize: '0.875rem', color: '#777', textDecoration: 'underline', mt: 0.5, display: 'inline-block' }}
+                                        style={{
+                                            color: "#000",
+                                            textDecoration: "none",
+                                            display: "inline-block",
+                                            mt: 0.5,
+                                            fontSize: '0.95rem',
+                                            lineHeight: 1.5
+                                        }}
                                     >
-                                        Open in Google maps
-                                    </Link>
+                                       - 4635 Queen St, Niagara Falls, ON L2E 2L7<br />
+                                    </a>
+                                    <a
+                                        href="https://maps.app.goo.gl/UwpEPwci2EoBoyQk7?g_st=i&utm_campaign=ac-im"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            color: "#000",
+                                            textDecoration: "none",
+                                            display: "inline-block",
+                                            mt: 0.5,
+                                            fontSize: '0.95rem',
+                                            lineHeight: 1.5
+                                        }}
+                                    >
+                                       - 6725 Millcreek Dr Unit 1, Mississauga, ON L5N 5V3, Canada<br />
+                                    </a>
                                 </Box>
                             </Box>
 
@@ -153,6 +171,6 @@ export default function ContactSection() {
                     </Grid>
                 </Grid>
             </Container>
-        </Box>
+        </Box >
     );
 }

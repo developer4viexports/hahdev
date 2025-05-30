@@ -66,7 +66,7 @@ function LTRM() {
     return (
         <>
             <Navbar />
-            <ServiceHero heading={<> Long-Term Rental<br /> Management </>} subheading="Where Long-Term Tenants Meet Long-Term Peace of Mind." bg={bg}
+            <ServiceHero heading={<> Long-Term Rental<br /> Management </>} subheading="Where Long-Term Tenants Meet Long-Term Peace of Mind." bg={bg} background='#1B1C1B'
             />
             <AboutUs data={data} direction={'row-reverse'} image={strm1} />
             <ServicesAccordion services={services} sectionKey='LTR' accordioanImg={accordionImg} />

@@ -11,7 +11,7 @@ import {
 // import bg from "../assets/images/hero.png";
 
 
-function ServiceHero({ heading, subheading, bg }) {
+function ServiceHero({ heading, subheading, bg, background }) {
     return (
         <Box
             sx={{
@@ -68,7 +68,7 @@ function ServiceHero({ heading, subheading, bg }) {
                         textTransform: "uppercase",
                         letterSpacing: 2,
                         mb: 1,
-                        background: "#000",
+                        background: background,
                         // background: "#1B1C1E",
                         padding: "4px 2px",
                         // Responsive font sizes
