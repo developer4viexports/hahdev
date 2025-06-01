@@ -100,7 +100,7 @@ export default function Footer({ bgImg }) {
                                             lineHeight: 1.5
                                         }}
                                     >
-                                        - 4635 Queen St, Niagara Falls, ON L2E 2L7<br />
+                                      Head Office - 4635 Queen St, Niagara Falls, ON L2E 2L7<br />
                                     </a>
                                     <a
                                         href="https://maps.app.goo.gl/UwpEPwci2EoBoyQk7?g_st=i&utm_campaign=ac-im"
@@ -115,7 +115,7 @@ export default function Footer({ bgImg }) {
                                             lineHeight: 1.5
                                         }}
                                     >
-                                        - 6725 Millcreek Dr Unit 1, Mississauga, ON L5N 5V3, Canada<br />
+                                      Branch Office - 6725 Millcreek Dr Unit 1, Mississauga, ON L5N 5V3, Canada<br />
                                     </a>
                                 </Typography>
 
