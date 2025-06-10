@@ -15,7 +15,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import bg from "../assets/images/hero.png";
 import axios from "axios";
- import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 function HeroSection() {
   const [rentalType, setRentalType] = useState("STR");
@@ -45,41 +45,41 @@ function HeroSection() {
     if (rentalType === "STR") {
       params = new URLSearchParams({
         numberOfGuests: guests.toString(),
-        city: location,
+        city: location === 'Any Location' ? '' : location,
         start: checkIn,
         end: checkOut,
         page: "1",
       });
-    } 
+    }
     const url = `https://book.thehah.ca/search?${params.toString()}`;
     window.open(url, "_blank");
   };
 
 
-const handleSubmit = async () => {
-  try {
-    const payload = {
-      numberOfGuests: guests,
-      city:            location,
-      bedroom:         bedroom,
-      duration:        duration,
-    };
-    const response = await axios.post(
-      "https://hah-backend-p9sa.onrender.com/api/query",
-      payload,
-      { headers: { "Content-Type": "application/json" } }
-    );
-    console.log("response ",response  )
-if(response.data.success){
-  toast.success("Request Send Successfully");
-}
-    console.log("Server response:", response.data);
-    // e.g. show a success message to the user
-  } catch (error) {
-    console.error("Error sending enquiry:", error);
-    // e.g. show an error toast
-  }
-};
+  const handleSubmit = async () => {
+    try {
+      const payload = {
+        numberOfGuests: guests,
+        city: location,
+        bedroom: bedroom,
+        duration: duration,
+      };
+      const response = await axios.post(
+        "https://hah-backend-p9sa.onrender.com/api/query",
+        payload,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log("response ", response)
+      if (response.data.success) {
+        toast.success("Request Send Successfully");
+      }
+      console.log("Server response:", response.data);
+      // e.g. show a success message to the user
+    } catch (error) {
+      console.error("Error sending enquiry:", error);
+      // e.g. show an error toast
+    }
+  };
 
 
   const locations = [
@@ -302,57 +302,57 @@ if(response.data.success){
                   </FormControl>
                 </Box>
 
-    <Box sx={{ width: "100%" }}>
-      <TextField
-        label="Guests"
-        type="number"
-        variant="standard"
-        value={guests}
-        onChange={(e) => {
-          // mirror whatever the user types, including "" or "0"
-          setGuests(e.target.value);
-        }}
-        onBlur={() => {
-          // enforce minimum of 1 when they leave the field
-          if (!guests || Number(guests) < 1) {
-            setGuests("1");
-          }
-        }}
-        InputProps={{
-          inputProps: { min: 1 },
-          sx: {
-            "& input[type=number]": {
-              MozAppearance: "textfield",
-              fontSize: { xs: "0.85rem", sm: "1rem" },
-            },
-            "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
-              WebkitAppearance: "auto",
-            },
-            backgroundColor: "rgba(245, 245, 245, 0.6)",
-            borderRadius: "6px",
-            py: 1,
-            px: 2,
-            width: "100%",
-          },
-        }}
-        InputLabelProps={{
-          shrink: true,
-          sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
-        }}
-        sx={{
-          "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-            borderBottom: "none",
-          },
-          width: "100%",
-          boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-          borderRadius: "6px",
-          transition: "box-shadow 0.3s ease",
-          "&:hover": {
-            boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
-          },
-        }}
-      />
-    </Box>
+                <Box sx={{ width: "100%" }}>
+                  <TextField
+                    label="Guests"
+                    type="number"
+                    variant="standard"
+                    value={guests}
+                    onChange={(e) => {
+                      // mirror whatever the user types, including "" or "0"
+                      setGuests(e.target.value);
+                    }}
+                    onBlur={() => {
+                      // enforce minimum of 1 when they leave the field
+                      if (!guests || Number(guests) < 1) {
+                        setGuests("1");
+                      }
+                    }}
+                    InputProps={{
+                      inputProps: { min: 1 },
+                      sx: {
+                        "& input[type=number]": {
+                          MozAppearance: "textfield",
+                          fontSize: { xs: "0.85rem", sm: "1rem" },
+                        },
+                        "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
+                          WebkitAppearance: "auto",
+                        },
+                        backgroundColor: "rgba(245, 245, 245, 0.6)",
+                        borderRadius: "6px",
+                        py: 1,
+                        px: 2,
+                        width: "100%",
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
+                    }}
+                    sx={{
+                      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                        borderBottom: "none",
+                      },
+                      width: "100%",
+                      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
+                      borderRadius: "6px",
+                      transition: "box-shadow 0.3s ease",
+                      "&:hover": {
+                        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
+                      },
+                    }}
+                  />
+                </Box>
                 <Box sx={{ width: "100%" }}>
                   <TextField
                     label="Check In"
@@ -625,101 +625,101 @@ if(response.data.success){
                 </Box> */}
 
 
-<Box sx={{ width: "100%" }}>
-  <TextField
-    label="No. of Bedroom"
-    type="number"
-    variant="standard"
-    value={bedroom}
-    onChange={e => setBedroom(e.target.value)}
-    onBlur={() => {
-      if (!bedroom || Number(bedroom) < 1) {
-        setBedroom("1");
-      }
-    }}
-    InputProps={{
-      inputProps: { min: 1 },
-      sx: {
-        "& input[type=number]": {
-          MozAppearance: "textfield",
-          fontSize: { xs: "0.85rem", sm: "1rem" },
-        },
-        "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
-          WebkitAppearance: "auto",
-        },
-        backgroundColor: "rgba(245, 245, 245, 0.6)",
-        borderRadius: "6px",
-        py: 1,
-        px: 2,
-        width: "100%",
-      },
-    }}
-    InputLabelProps={{
-      shrink: true,
-      sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
-    }}
-    sx={{
-      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-        borderBottom: "none",
-      },
-      width: "100%",
-      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-      borderRadius: "6px",
-      transition: "box-shadow 0.3s ease",
-      "&:hover": {
-        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
-      },
-    }}
-  />
-</Box>
+                <Box sx={{ width: "100%" }}>
+                  <TextField
+                    label="No. of Bedroom"
+                    type="number"
+                    variant="standard"
+                    value={bedroom}
+                    onChange={e => setBedroom(e.target.value)}
+                    onBlur={() => {
+                      if (!bedroom || Number(bedroom) < 1) {
+                        setBedroom("1");
+                      }
+                    }}
+                    InputProps={{
+                      inputProps: { min: 1 },
+                      sx: {
+                        "& input[type=number]": {
+                          MozAppearance: "textfield",
+                          fontSize: { xs: "0.85rem", sm: "1rem" },
+                        },
+                        "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
+                          WebkitAppearance: "auto",
+                        },
+                        backgroundColor: "rgba(245, 245, 245, 0.6)",
+                        borderRadius: "6px",
+                        py: 1,
+                        px: 2,
+                        width: "100%",
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
+                    }}
+                    sx={{
+                      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                        borderBottom: "none",
+                      },
+                      width: "100%",
+                      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
+                      borderRadius: "6px",
+                      transition: "box-shadow 0.3s ease",
+                      "&:hover": {
+                        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
+                      },
+                    }}
+                  />
+                </Box>
 
-<Box sx={{ width: "100%" }}>
-  <TextField
-    label="No. of People"
-    type="number"
-    variant="standard"
-    value={guests}
-    onChange={e => setGuests(e.target.value)}
-    onBlur={() => {
-      if (!guests || Number(guests) < 1) {
-        setGuests("1");
-      }
-    }}
-    InputProps={{
-      inputProps: { min: 1 },
-      sx: {
-        "& input[type=number]": {
-          MozAppearance: "textfield",
-          fontSize: { xs: "0.85rem", sm: "1rem" },
-        },
-        "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
-          WebkitAppearance: "auto",
-        },
-        backgroundColor: "rgba(245, 245, 245, 0.6)",
-        borderRadius: "6px",
-        py: 1,
-        px: 2,
-        width: "100%",
-      },
-    }}
-    InputLabelProps={{
-      shrink: true,
-      sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
-    }}
-    sx={{
-      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-        borderBottom: "none",
-      },
-      width: "100%",
-      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-      borderRadius: "6px",
-      transition: "box-shadow 0.3s ease",
-      "&:hover": {
-        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
-      },
-    }}
-  />
-</Box>
+                <Box sx={{ width: "100%" }}>
+                  <TextField
+                    label="No. of People"
+                    type="number"
+                    variant="standard"
+                    value={guests}
+                    onChange={e => setGuests(e.target.value)}
+                    onBlur={() => {
+                      if (!guests || Number(guests) < 1) {
+                        setGuests("1");
+                      }
+                    }}
+                    InputProps={{
+                      inputProps: { min: 1 },
+                      sx: {
+                        "& input[type=number]": {
+                          MozAppearance: "textfield",
+                          fontSize: { xs: "0.85rem", sm: "1rem" },
+                        },
+                        "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
+                          WebkitAppearance: "auto",
+                        },
+                        backgroundColor: "rgba(245, 245, 245, 0.6)",
+                        borderRadius: "6px",
+                        py: 1,
+                        px: 2,
+                        width: "100%",
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
+                    }}
+                    sx={{
+                      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                        borderBottom: "none",
+                      },
+                      width: "100%",
+                      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
+                      borderRadius: "6px",
+                      transition: "box-shadow 0.3s ease",
+                      "&:hover": {
+                        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
+                      },
+                    }}
+                  />
+                </Box>
                 <Box sx={{ width: "100%" }}>
                   <TextField
                     label="Rent Expectation"
@@ -814,43 +814,79 @@ if(response.data.success){
                 </Box>
               </Box>
             )}
-
-            <Box
-              sx={{
-                display: { xs: "flex", sm: "none" },
-                justifyContent: "center",
-                width: "100%",
-                mt: 2,
-              }}
-            >
-              <Button
-                onClick={handleSubmit}
-                variant="contained"
-                size="large"
-                // startIcon={<SearchIcon />}
+            {rentalType === "STR" ? (
+              <Box
                 sx={{
-                  bgcolor: "#000",
-                  "&:hover": {
-                    bgcolor: "#333",
-                    transform: "scale(1.03)",
-                    boxShadow: "0 6px 16px rgba(0,0,0,0.3)",
-                  },
-                  height: "60px",
-                  borderRadius: "50px",
-                  textTransform: "uppercase",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                  transition: "all 0.3s ease",
-                  width: "60%",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                  display: { xs: "flex", sm: "none" },
                   justifyContent: "center",
-                  px: 4,
-                  py: 1.5,
+                  width: "100%",
+                  mt: 2,
                 }}
               >
-                Submit
-              </Button>
-            </Box>
+                <Button
+                  onClick={handleSearch}
+                  variant="contained"
+                  size="large"
+                  startIcon={<SearchIcon />}
+                  sx={{
+                    bgcolor: "#000",
+                    "&:hover": {
+                      bgcolor: "#333",
+                      transform: "scale(1.03)",
+                      boxShadow: "0 6px 16px rgba(0,0,0,0.3)",
+                    },
+                    height: "60px",
+                    borderRadius: "50px",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                    fontSize: "1.1rem",
+                    transition: "all 0.3s ease",
+                    width: "100%",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                    justifyContent: "center",
+                    px: 4,
+                    py: 1.5,
+                  }}
+                >
+                  Search
+                </Button>
+              </Box>) : (
+              <Box
+                sx={{
+                  display: { xs: "flex", sm: "none" },
+                  justifyContent: "center",
+                  width: "100%",
+                  mt: 2,
+                }}
+              >
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  size="large"
+                  // startIcon={<SearchIcon />}
+                  sx={{
+                    bgcolor: "#000",
+                    "&:hover": {
+                      bgcolor: "#333",
+                      transform: "scale(1.03)",
+                      boxShadow: "0 6px 16px rgba(0,0,0,0.3)",
+                    },
+                    height: "60px",
+                    borderRadius: "50px",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                    transition: "all 0.3s ease",
+                    width: "60%",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                    justifyContent: "center",
+                    px: 4,
+                    py: 1.5,
+                  }}
+                >
+                  Submit
+                </Button>
+              </Box>)}
           </Box>
         </Paper>
       </Box>
@@ -859,4 +895,4 @@ if(response.data.success){
   );
 }
 
-export default HeroSection;
+export default HeroSection;
