@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Container,
@@ -9,15 +9,111 @@ import {
     Checkbox,
     FormControlLabel,
     IconButton,
+    CircularProgress,
 } from "@mui/material";
 import Facebook from "@mui/icons-material/Facebook";
 import Instagram from "@mui/icons-material/Instagram";
-import YouTube from "@mui/icons-material/YouTube";
+import WhatsApp from "@mui/icons-material/WhatsApp";
 import logo from "../assets/images/HAH_White_logo.png";
-import { Link } from "react-router-dom";
-import { WhatsApp } from "@mui/icons-material";
 
 export default function Footer({ bgImg }) {
+    // Form state
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: "",
+        terms: false,
+    });
+    const [loading, setLoading] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // null, 'success', or 'error'
+    const [errorMessage, setErrorMessage] = useState("");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(formData.email)) { ... }
+    // Handle form input changes
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
+        // Clear submission status on input change
+        setSubmitStatus(null);
+        setErrorMessage("");
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setSubmitStatus(null);
+        setErrorMessage("");
+
+        // Validate form
+        if (!formData.name || !formData.email || !formData.message) {
+            setLoading(false);
+            setSubmitStatus("error");
+            setErrorMessage("Please fill in all required fields.");
+            return;
+        }
+
+        if (!formData.terms) {
+            setLoading(false);
+            setSubmitStatus("error");
+            setErrorMessage("You must accept the Terms and Conditions.");
+            return;
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setLoading(false);
+            setSubmitStatus("error");
+            setErrorMessage("Please enter a valid email address.");
+            return;
+        }
+
+        // Prepare data for API
+        const dataToSend = {
+            name: formData.name,
+            email: formData.email,
+            phone: "", // Not in form, send empty
+            subject: "Footer Contact Form Submission",
+            message: formData.message,
+            terms: formData.terms,
+        };
+
+        try {
+            const response = await fetch("https://hah-backend-p9sa.onrender.com/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataToSend),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setSubmitStatus("success");
+                // Reset form
+                setFormData({
+                    name: "",
+                    email: "",
+                    message: "",
+                    terms: false,
+                });
+            } else {
+                setSubmitStatus("error");
+                setErrorMessage(result.error || "Failed to send message.");
+            }
+        } catch (err) {
+            setSubmitStatus("error");
+            setErrorMessage("Network error. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Box component="footer" sx={{ backgroundColor: "#000", color: "#fff" }}>
             {/* Banner + cards */}
@@ -62,7 +158,7 @@ export default function Footer({ bgImg }) {
                                 <Typography variant="h5" sx={{ mb: { xs: 0, md: 3 }, fontWeight: 500 }}>
                                     Let’s connect
                                 </Typography>
-                                <Typography sx={{ mb: 1 }}>
+                                <Typography sx={{ mb: 1, fontSize: '0.95rem', lineHeight: 1.5 }}>
                                     <strong>Phone</strong>
                                     <br />
                                     <a
@@ -73,7 +169,7 @@ export default function Footer({ bgImg }) {
                                     </a>
                                 </Typography>
 
-                                <Typography sx={{ mb: 1 }}>
+                                <Typography sx={{ mb: 1, fontSize: '0.95rem', lineHeight: 1.5 }}>
                                     <strong>Email</strong>
                                     <br />
                                     <a
@@ -100,7 +196,7 @@ export default function Footer({ bgImg }) {
                                             lineHeight: 1.5
                                         }}
                                     >
-                                      Head Office - 4635 Queen St, Niagara Falls, ON L2E 2L7<br />
+                                        Head Office - 4635 Queen St, Niagara Falls, ON L2E 2L7<br />
                                     </a>
                                     <a
                                         href="https://maps.app.goo.gl/UwpEPwci2EoBoyQk7?g_st=i&utm_campaign=ac-im"
@@ -115,7 +211,7 @@ export default function Footer({ bgImg }) {
                                             lineHeight: 1.5
                                         }}
                                     >
-                                      Branch Office - 6725 Millcreek Dr Unit 1, Mississauga, ON L5N 5V3, Canada<br />
+                                        Branch Office - 6725 Millcreek Dr Unit 1, Mississauga, ON L5N 5V3, Canada<br />
                                     </a>
                                 </Typography>
 
@@ -167,45 +263,120 @@ export default function Footer({ bgImg }) {
                                 <Typography variant="h5" sx={{ mb: { xs: 0, md: 3 }, fontWeight: 500, fontSize: { xs: "20px" } }}>
                                     We’d love to hear from you
                                 </Typography>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label="Your Name"
-                                            variant="standard"
-                                        />
+                                <form onSubmit={handleSubmit}>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12} md={6}>
+                                            <TextField
+                                                fullWidth
+                                                label="Your Name"
+                                                variant="standard"
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                required
+                                                error={submitStatus === "error" && !formData.name}
+                                                helperText={
+                                                    submitStatus === "error" && !formData.name
+                                                        ? "Name is required"
+                                                        : ""
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <TextField
+                                                fullWidth
+                                                label="Email"
+                                                variant="standard"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                required
+                                                error={
+                                                    (submitStatus === "error" && !formData.email) ||
+                                                    (submitStatus === "error" && !emailRegex.test(formData.email))
+                                                }
+                                                helperText={
+                                                    submitStatus === "error" && !formData.email
+                                                        ? "Email is required"
+                                                        : submitStatus === "error" && !emailRegex.test(formData.email)
+                                                            ? "Invalid email format"
+                                                            : ""
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                fullWidth
+                                                label="Message"
+                                                multiline
+                                                rows={1}
+                                                variant="standard"
+                                                name="message"
+                                                value={formData.message}
+                                                onChange={handleChange}
+                                                required
+                                                error={submitStatus === "error" && !formData.message}
+                                                helperText={
+                                                    submitStatus === "error" && !formData.message
+                                                        ? "Message is required"
+                                                        : ""
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="terms"
+                                                        checked={formData.terms}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                }
+                                                label="I accept the Terms and Conditions"
+                                            />
+                                            {submitStatus === "error" && !formData.terms && (
+                                                <Typography color="error" variant="caption" sx={{ display: "block" }}>
+                                                    You must accept the Terms and Conditions
+                                                </Typography>
+                                            )}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Button
+                                                type="submit"
+                                                variant="contained"
+                                                disabled={loading}
+                                                sx={{
+                                                    backgroundColor: "#000",
+                                                    color: "#fff",
+                                                    "&:hover": { backgroundColor: "#222" },
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: 1,
+                                                }}
+                                            >
+                                                {loading ? (
+                                                    <>
+                                                        <CircularProgress size={20} color="inherit" />
+                                                        Sending...
+                                                    </>
+                                                ) : (
+                                                    "SEND"
+                                                )}
+                                            </Button>
+                                            {submitStatus === "success" && (
+                                                <Typography color="success.main" sx={{ mt: 2 }}>
+                                                    Your message has been sent successfully!
+                                                </Typography>
+                                            )}
+                                            {submitStatus === "error" && errorMessage && (
+                                                <Typography color="error" sx={{ mt: 2 }}>
+                                                    {errorMessage}
+                                                </Typography>
+                                            )}
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField fullWidth label="Email" variant="standard" />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            label="Message"
-                                            multiline
-                                            rows={1}
-                                            variant="standard"
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="I accept the Terms and conditions"
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                backgroundColor: "#000",
-                                                color: "#fff",
-                                                "&:hover": { backgroundColor: "#222" },
-                                            }}
-                                        >
-                                            SEND
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+                                </form>
                             </Box>
                         </Grid>
                     </Grid>
@@ -259,43 +430,18 @@ export default function Footer({ bgImg }) {
                                 maxWidth: { xs: 180, md: 250 },
                                 mx: { xs: "auto", md: 0 },
                                 display: "block",
-                                scale: { xs: 1.8, md: 1 },  // changed from 0 → 1 for desktop visibility
+                                scale: { xs: 1.8, md: 1 },
                             }}
                         />
                     </Box>
                     <Typography variant="caption" color="white" sx={{ mt: 2 }}>
                         © 2025 Home Away From Home Developments INC. · Premier Airbnb Hosting
                         & Property Management.<br /> All Rights Reserved.
-
-
                     </Typography>
-
                 </Container>
             </Box>
 
-            {/* Bottom legal text */}
-            <Box
-                sx={{
-                    py: { xs: 2, md: 4 },
-                    px: 2,
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: { xs: "end", md: "flex-end" },
-                    minHeight: { xs: "20px", md: "1vh" },
-                    pb: { xs: 8, md: 0 }   // 64px padding on xs, 0 on md+
-                }}
-            >
-                {/* …your content here… */}
-            </Box>
-
-
-
-
-
-
-
-
+            {/* Extra Box (empty in original code, removing to avoid redundancy) */}
         </Box >
     );
 }
-

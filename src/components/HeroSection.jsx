@@ -23,9 +23,11 @@ function HeroSection() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [moveIn, setMoveIn] = useState("");
+  const [email, setEmail] = useState("");
   const [duration, setDuration] = useState("");
   const [guests, setGuests] = useState("");
   const [bedroom, setBedroom] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleRentalTypeChange = (event, newValue) => {
     if (newValue !== null) {
@@ -35,8 +37,11 @@ function HeroSection() {
       setCheckIn("");
       setCheckOut("");
       setMoveIn("");
+      setEmail("");
       setDuration("");
       setGuests("");
+      setBedroom("");
+      setErrors({});
     }
   };
 
@@ -55,32 +60,70 @@ function HeroSection() {
     window.open(url, "_blank");
   };
 
+  const validateLTRForm = () => {
+    const newErrors = {};
+    if (!location || location === "") {
+      newErrors.location = "Location is required";
+    }
+    if (!guests || Number(guests) < 1) {
+      newErrors.guests = "Number of people must be at least 1";
+    }
+    if (!bedroom || Number(bedroom) < 1) {
+      newErrors.bedroom = "Number of bedrooms must be at least 1";
+    }
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+    }
+    if (moveIn && (isNaN(moveIn) || Number(moveIn) <= 0)) {
+      newErrors.moveIn = "Rent expectation must be a positive number";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async () => {
+    if (!validateLTRForm()) {
+      toast.error("Please fix the errors in the form");
+      return;
+    }
+
     try {
       const payload = {
         numberOfGuests: guests,
-        city: location,
+        city: location === 'Any Location' ? '' : location,
         bedroom: bedroom,
-        duration: duration,
+        duration: duration || "N/A",
+        email: email,
+        moveIn: moveIn || "N/A",
       };
       const response = await axios.post(
         "https://hah-backend-p9sa.onrender.com/api/query",
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log("response ", response)
+      console.log("response ", response);
       if (response.data.success) {
-        toast.success("Request Send Successfully");
+        toast.success("Request Sent Successfully");
+        // Reset form on success
+        setLocation("");
+        setBedroom("");
+        setGuests("");
+        setMoveIn("");
+        setEmail("");
+        setDuration("");
+        setErrors({});
       }
       console.log("Server response:", response.data);
-      // e.g. show a success message to the user
     } catch (error) {
       console.error("Error sending enquiry:", error);
-      // e.g. show an error toast
+      toast.error("Failed to send request. Please try again.");
     }
   };
-
 
   const locations = [
     "Any Location",
@@ -235,7 +278,7 @@ function HeroSection() {
             }}
           >
             {rentalType === "STR" ? (
-              // STR Form (Existing)
+              // STR Form (Unchanged)
               <Box
                 sx={{
                   display: { xs: "grid", sm: "flex" },
@@ -309,11 +352,9 @@ function HeroSection() {
                     variant="standard"
                     value={guests}
                     onChange={(e) => {
-                      // mirror whatever the user types, including "" or "0"
                       setGuests(e.target.value);
                     }}
                     onBlur={() => {
-                      // enforce minimum of 1 when they leave the field
                       if (!guests || Number(guests) < 1) {
                         setGuests("1");
                       }
@@ -500,11 +541,11 @@ function HeroSection() {
                 </Box>
               </Box>
             ) : (
-              // LTR Form
+              // LTR Form (Updated with Full-Width Email on Mobile)
               <Box
                 sx={{
                   display: { xs: "grid", sm: "flex" },
-                  gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(5, 1fr)" },
+                  gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(6, 1fr)" },
                   flexDirection: { sm: "row" },
                   gap: { xs: 1, sm: 1 },
                   alignItems: "center",
@@ -564,70 +605,17 @@ function HeroSection() {
                         </MenuItem>
                       ))}
                     </Select>
+                    {errors.location && (
+                      <Typography color="error" variant="caption" sx={{ pl: 1, mt: 0.5 }}>
+                        {errors.location}
+                      </Typography>
+                    )}
                   </FormControl>
                 </Box>
 
-
-                {/* <Box sx={{ width: "100%" }}>
-                  <FormControl
-                    variant="standard"
-                    sx={{
-                      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
-                        borderBottom: "none",
-                      },
-                      width: "100%",
-                      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-                      borderRadius: "6px",
-                      backgroundColor: "rgba(245, 245, 245, 0.6)",
-                      transition: "box-shadow 0.3s ease",
-                      "&:hover": {
-                        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
-                      },
-                    }}
-                  >
-                    <InputLabel
-                      sx={{
-                        color: "text.secondary",
-                        pl: 1,
-                        fontSize: { xs: "0.85rem", sm: "0.95rem" },
-                      }}
-                    >
-                      No. of Bedroom
-                    </InputLabel>
-                    <Select
-                      value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
-                      label="Duration"
-                      sx={{
-                        "&:before, &:after": { borderBottom: "none" },
-                        "& .MuiSelect-select": {
-                          paddingBottom: "6px",
-                          paddingLeft: "12px",
-                          paddingTop: "8px",
-                          fontSize: { xs: "0.85rem", sm: "1rem" },
-                        },
-                        borderRadius: "6px",
-                        py: 1,
-                        px: 1,
-                        width: "100%",
-                      }}
-                    >
-                      <MenuItem value="">
-                        <em>Select duration</em>
-                      </MenuItem>
-                      {durations.map((dur) => (
-                        <MenuItem key={dur} value={dur}>
-                          {dur}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box> */}
-
-
                 <Box sx={{ width: "100%" }}>
                   <TextField
-                    label="No. of Bedroom"
+                    label="No. of Bedrooms"
                     type="number"
                     variant="standard"
                     value={bedroom}
@@ -670,6 +658,8 @@ function HeroSection() {
                         boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
                       },
                     }}
+                    error={!!errors.bedroom}
+                    helperText={errors.bedroom}
                   />
                 </Box>
 
@@ -718,8 +708,11 @@ function HeroSection() {
                         boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
                       },
                     }}
+                    error={!!errors.guests}
+                    helperText={errors.guests}
                   />
                 </Box>
+
                 <Box sx={{ width: "100%" }}>
                   <TextField
                     label="Rent Expectation"
@@ -738,15 +731,10 @@ function HeroSection() {
                         py: 1,
                         px: 2,
                         width: "100%",
-                        "&::-webkit-calendar-picker-indicator": {
-                          filter: "invert(0.5)",
-                          cursor: "pointer",
-                        },
                         "& input": {
                           fontSize: { xs: "0.85rem", sm: "1rem" },
                         },
                       },
-                      // placeholder: "dd/mm/yyyy",
                     }}
                     sx={{
                       "& .MuiInput-underline:before, & .MuiInput-underline:after": {
@@ -759,23 +747,56 @@ function HeroSection() {
                       "&:hover": {
                         boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
                       },
-                      "& input:invalid + fieldset": {
-                        borderColor: "grey",
-                      },
-                      "& input:valid + fieldset": {
-                        borderColor: "grey",
-                      },
-                      "& input:invalid": {
-                        color: "grey",
-                      },
-                      "& input:valid": {
-                        color: "black",
-                      },
                     }}
+                    error={!!errors.moveIn}
+                    helperText={errors.moveIn}
                   />
                 </Box>
 
-
+                <Box
+                  sx={{
+                    width: "100%",
+                    gridColumn: { xs: "1 / -1", sm: "auto" }, // Full width on xs
+                  }}
+                >
+                  <TextField
+                    label="Email"
+                    type="email"
+                    variant="standard"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                      sx: { fontSize: { xs: "0.85rem", sm: "0.95rem" }, pl: 1 },
+                    }}
+                    InputProps={{
+                      sx: {
+                        backgroundColor: "rgba(245, 245, 245, 0.6)",
+                        borderRadius: "6px",
+                        py: 1,
+                        px: 2,
+                        width: "100%",
+                        "& input": {
+                          fontSize: { xs: "0.85rem", sm: "1rem" },
+                        },
+                      },
+                    }}
+                    sx={{
+                      "& .MuiInput-underline:before, & .MuiInput-underline:after": {
+                        borderBottom: "none",
+                      },
+                      width: "100%",
+                      boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
+                      borderRadius: "6px",
+                      transition: "box-shadow 0.3s ease",
+                      "&:hover": {
+                        boxShadow: "0 5px 14px rgba(0,0,0,0.12)",
+                      },
+                    }}
+                    error={!!errors.email}
+                    helperText={errors.email}
+                  />
+                </Box>
 
                 <Box
                   sx={{
@@ -788,7 +809,6 @@ function HeroSection() {
                     onClick={handleSubmit}
                     variant="contained"
                     size="large"
-                    // startIcon={<SearchIcon />}
                     sx={{
                       bgcolor: "#000",
                       "&:hover": {
@@ -839,9 +859,9 @@ function HeroSection() {
                     borderRadius: "50px",
                     textTransform: "uppercase",
                     fontWeight: 600,
-                    fontSize: "1.1rem",
+                    fontSize: "1rem",
                     transition: "all 0.3s ease",
-                    width: "100%",
+                    width: "60%",
                     boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
                     justifyContent: "center",
                     px: 4,
@@ -850,7 +870,8 @@ function HeroSection() {
                 >
                   Search
                 </Button>
-              </Box>) : (
+              </Box>
+            ) : (
               <Box
                 sx={{
                   display: { xs: "flex", sm: "none" },
@@ -863,7 +884,6 @@ function HeroSection() {
                   onClick={handleSubmit}
                   variant="contained"
                   size="large"
-                  // startIcon={<SearchIcon />}
                   sx={{
                     bgcolor: "#000",
                     "&:hover": {
@@ -886,7 +906,8 @@ function HeroSection() {
                 >
                   Submit
                 </Button>
-              </Box>)}
+              </Box>
+            )}
           </Box>
         </Paper>
       </Box>

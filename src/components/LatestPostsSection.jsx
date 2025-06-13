@@ -123,7 +123,7 @@ export default function LatestPostsSection() {
                   </Typography>
 
                   <Box
-                    onClick={() => navigate("/blogs")}
+                    // onClick={() => navigate("/blogs")}
                     sx={{
                       mt: "auto",
                       display: "flex",

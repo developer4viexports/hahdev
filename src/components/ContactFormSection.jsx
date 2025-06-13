@@ -10,7 +10,7 @@ import {
   Button,
 } from '@mui/material';
 
-const API_ENDPOINT = `http://localhost:5000/api/contact`;
+const API_ENDPOINT = `https://hah-backend-p9sa.onrender.com/api/contact`;
 
 export default function ContactFormSection() {
   const [form, setForm] = useState({
