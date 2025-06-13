@@ -11,6 +11,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  CircularProgress,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import bg from "../assets/images/hero.png";
@@ -28,6 +29,7 @@ function HeroSection() {
   const [guests, setGuests] = useState("");
   const [bedroom, setBedroom] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const handleRentalTypeChange = (event, newValue) => {
     if (newValue !== null) {
@@ -92,6 +94,7 @@ function HeroSection() {
       return;
     }
 
+    setLoading(true); // Set loading to true when submission starts
     try {
       const payload = {
         numberOfGuests: guests,
@@ -122,6 +125,8 @@ function HeroSection() {
     } catch (error) {
       console.error("Error sending enquiry:", error);
       toast.error("Failed to send request. Please try again.");
+    } finally {
+      setLoading(false); // Set loading to false when submission completes
     }
   };
 
@@ -541,7 +546,7 @@ function HeroSection() {
                 </Box>
               </Box>
             ) : (
-              // LTR Form (Updated with Full-Width Email on Mobile)
+              // LTR Form (Updated with Loading State)
               <Box
                 sx={{
                   display: { xs: "grid", sm: "flex" },
@@ -756,7 +761,7 @@ function HeroSection() {
                 <Box
                   sx={{
                     width: "100%",
-                    gridColumn: { xs: "1 / -1", sm: "auto" }, // Full width on xs
+                    gridColumn: { xs: "1 / -1", sm: "auto" },
                   }}
                 >
                   <TextField
@@ -809,12 +814,17 @@ function HeroSection() {
                     onClick={handleSubmit}
                     variant="contained"
                     size="large"
+                    disabled={loading} // Disable button while loading
                     sx={{
                       bgcolor: "#000",
                       "&:hover": {
                         bgcolor: "#333",
-                        transform: "scale(1.03)",
-                        boxShadow: "0 6px 16px rgba(0,0,0,0.3)",
+                        transform: loading ? "none" : "scale(1.03)", // Disable hover transform during loading
+                        boxShadow: loading ? "none" : "0 6px 16px rgba(0,0,0,0.3)",
+                      },
+                      "&:disabled": {
+                        bgcolor: "#555", // Slightly lighter gray when disabled
+                        color: "#ccc", // Lighter text color when disabled
                       },
                       height: "60px",
                       borderRadius: "50px",
@@ -829,7 +839,11 @@ function HeroSection() {
                       py: 1.5,
                     }}
                   >
-                    Submit
+                    {loading ? (
+                      <CircularProgress size={24} sx={{ color: "#fff" }} />
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Box>
               </Box>
@@ -884,12 +898,17 @@ function HeroSection() {
                   onClick={handleSubmit}
                   variant="contained"
                   size="large"
+                  disabled={loading} // Disable button while loading
                   sx={{
                     bgcolor: "#000",
                     "&:hover": {
                       bgcolor: "#333",
-                      transform: "scale(1.03)",
-                      boxShadow: "0 6px 16px rgba(0,0,0,0.3)",
+                      transform: loading ? "none" : "scale(1.03)",
+                      boxShadow: loading ? "none" : "0 6px 16px rgba(0,0,0,0.3)",
+                    },
+                    "&:disabled": {
+                      bgcolor: "#555",
+                      color: "#ccc",
                     },
                     height: "60px",
                     borderRadius: "50px",
@@ -904,7 +923,11 @@ function HeroSection() {
                     py: 1.5,
                   }}
                 >
-                  Submit
+                  {loading ? (
+                    <CircularProgress size={24} sx={{ color: "#fff" }} />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </Box>
             )}

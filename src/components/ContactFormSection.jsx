@@ -9,6 +9,7 @@ import {
   FormControlLabel,
   Button,
 } from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
 
 const API_ENDPOINT = `https://hah-backend-p9sa.onrender.com/api/contact`;
 
@@ -55,6 +56,7 @@ export default function ContactFormSection() {
       if (!res.ok) {
         throw new Error(data.error || 'Server Error');
       }
+      toast.success("✅ Your message has been sent!");
 
       setFeedback({ type: 'success', message: '✅ Your message has been sent!' });
       setForm({ name: '', email: '', phone: '', subject: '', message: '', terms: false });
@@ -205,6 +207,7 @@ export default function ContactFormSection() {
           </Grid>
         </Box>
       </Container>
+      <ToastContainer />
     </Box>
   );
 }

@@ -15,6 +15,7 @@ import Facebook from "@mui/icons-material/Facebook";
 import Instagram from "@mui/icons-material/Instagram";
 import WhatsApp from "@mui/icons-material/WhatsApp";
 import logo from "../assets/images/HAH_White_logo.png";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Footer({ bgImg }) {
     // Form state
@@ -95,6 +96,8 @@ export default function Footer({ bgImg }) {
 
             if (response.ok) {
                 setSubmitStatus("success");
+                toast.success("Request Sent Successfully");
+
                 // Reset form
                 setFormData({
                     name: "",
@@ -440,7 +443,7 @@ export default function Footer({ bgImg }) {
                     </Typography>
                 </Container>
             </Box>
-
+            <ToastContainer />
             {/* Extra Box (empty in original code, removing to avoid redundancy) */}
         </Box >
     );
