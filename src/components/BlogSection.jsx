@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Container,
@@ -6,140 +6,151 @@ import {
     Typography,
     Button,
     Divider,
+    useMediaQuery,
 } from "@mui/material";
-// Your images for each service
-import img1 from "../assets/images/Blog_1.png";
-import img2 from "../assets/images/Blog_2.png";
-import img3 from "../assets/images/Blog_3.png";
-import img4 from "../assets/images/Blog_4.png";
-import img5 from "../assets/images/Blog_5.png";
-
-// Sample blog data
-const posts = [
-    {
-        title: "Why Ontario is a Hotspot for STR & Investment Properties",
-        time: "4 Min",
-        date: "August 19, 2022",
-        image: img1, // Ensure the file is in the public folder
-        link: "/blog/ontario-hotspot-str-investment",
-    },
-    {
-        title: "The Importance of Professional Property Management for Hosts",
-        time: "4 Min",
-        date: "August 19, 2022",
-        image: img2, // Ensure the file is in the public folder
-        link: "/blog/professional-property-management",
-    },
-    {
-        title: "Short‑Term vs. Long‑Term Rentals: Which One is More Profitable?",
-        time: "4 Min",
-        date: "August 19, 2022",
-        image: img3, // Ensure the file is in the public folder
-        link: "/blog/short-vs-long-term-rentals",
-    },
-    {
-        title: "Airbnb Hosting – The Ultimate Guide",
-        time: "4 Min",
-        date: "August 19, 2022",
-        image: img4, // Ensure the file is in the public folder
-        link: "/blog/airbnb-hosting-guide",
-    },
-    {
-        title: "Mistakes New Airbnb Hosts Make & How to Avoid them",
-        time: "4 Min",
-        date: "August 19, 2022",
-        image: img5, // Ensure the file is in the public folder
-        link: "/blog/airbnb-host-mistakes",
-    },
-];
-
+import { Link as RouterLink } from "react-router-dom";
+import blogData from "../data/blogData";
 
 export default function BlogSection() {
+    const isMobile = useMediaQuery("(max-width:900px)");
+    const BLOGS_PER_PAGE = 9;
+    const [visibleCount, setVisibleCount] = useState(BLOGS_PER_PAGE);
+
+    const handleSeeMore = () => {
+        setVisibleCount((prev) => prev + BLOGS_PER_PAGE);
+    };
+
+    const visibleBlogs = blogData.slice(0, visibleCount);
+
     return (
-        <Box sx={{ backgroundColor: "#000", py: { xs: 4, md: 8 } }}>
-            <Container maxWidth="lg">
-                {posts.map((post, idx) => (
-                    <Box key={idx} sx={{ width: "100%" }}>
-                        {/* Divider between posts (not before the first) */}
-                        {idx > 0 && <Divider sx={{ borderColor: "#333" }} />}
+        <Box component="section" sx={{ background: "#000", py: { xs: 4, md: 8 } }}>
+            <Container>
+                <Typography
+                    component="h1"
+                    variant="h4"
+                    color="#fff"
+                    mb={4}
+                    fontWeight={700}
+                    textAlign="center"
+                >
+                    Latest Blog Posts
+                </Typography>
 
-                        <Grid
-                            container
-                            alignItems="flex-start"
-                            spacing={2}
-                            sx={{ py: 2, flexDirection: { xs: "column", md: "row" } }}
+                {visibleBlogs.map((post, idx) => (
+                    <React.Fragment key={post.id}>
+                        {idx !== 0 && <Divider sx={{ my: { xs: 3, md: 4 }, borderColor: "#222" }} />}
+
+                        <article
+                            itemScope
+                            itemType="https://schema.org/BlogPosting"
                         >
-                            {/* Image */}
-                            <Grid item xs={12} md={4}>
-                                <Box
-                                    component="img"
-                                    src={post.image}
-                                    alt={post.title}
-                                    sx={{ width: "100%", height: "auto", borderRadius: 1 }}
-                                />
-                            </Grid>
-
-                            {/* Content: title/date at top-start, Read More at bottom-start */}
                             <Grid
-                                item
-                                xs={12}
-                                md={8}
+                                container
+                                spacing={4}
+                                alignItems="center"
+                                direction={isMobile ? "column" : "row"}
                                 sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "space-between",
-                                    height: "100%",
+                                    mb: { xs: 3, md: 6 },
+                                    p: { xs: 2, md: 0 },
+                                    borderRadius: 2,
+                                    background: "#111",
+                                    boxShadow: 2,
                                 }}
                             >
-                                <Box>
-                                    <Typography
-                                        variant="h6"
-                                        component="h3"
-                                        sx={{ color: "#fff", fontWeight: 500, mb: 1 }}
-                                    >
-                                        {post.title}
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ color: "#aaa", mb: 1 }}>
-                                        {post.time} &bull; {post.date}
-                                    </Typography>
-                                </Box>
+                                <Grid item xs={12} md={4}>
+                                    <Box
+                                        component="img"
+                                        src={post.image}
+                                        alt={post.title}
+                                        itemProp="image"
+                                        sx={{
+                                            width: "100%",
+                                            borderRadius: 2,
+                                            boxShadow: 2,
+                                            maxHeight: 220,
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                </Grid>
 
-                                <Button
-                                    href={post.link}
-                                    variant="text"
-                                    sx={{
-                                        color: "#fff",
-                                        textTransform: "none",
-                                        p: 0,
-                                        fontSize: "0.875rem",
-                                        fontWeight: 500,
-                                        alignSelf: "flex-start",
-                                        "&:hover": { backgroundColor: "transparent", color: "#ddd" },
-                                    }}
-                                >
-                                    READ MORE &rarr;
-                                </Button>
+                                <Grid item xs={12} md={8}>
+                                    <header>
+                                        <Typography
+                                            variant="h6"
+                                            component={RouterLink}
+                                            to={`/view-blog/${post.id}`}
+                                            itemProp="headline"
+                                            sx={{
+                                                fontWeight: 600,
+                                                color: "#42a5f5",
+                                                textDecoration: "none",
+                                                "&:hover": { textDecoration: "underline" }
+                                            }}
+                                        >
+                                            {post.title}
+                                        </Typography>
+                                    </header>
+
+                                    <Typography variant="body2" color="#aaa" mb={1}>
+                                        <time dateTime={post.date} itemProp="datePublished">
+                                            {post.time} • {post.date}
+                                        </time>
+                                    </Typography>
+
+                                    <Typography variant="body1" color="#ccc" mb={2} itemProp="description">
+                                        {post.excerpt}
+                                    </Typography>
+
+                                    <Button
+                                        component={RouterLink}
+                                        to={`/view-blog/${post.id}`}
+                                        variant="contained"
+                                        sx={{
+                                            color: "#fff",
+                                            background: "linear-gradient(90deg, #1e88e5 0%, #42a5f5 100%)",
+                                            textTransform: "none",
+                                            fontWeight: 600,
+                                            borderRadius: 2,
+                                            px: 3,
+                                            py: 1,
+                                            boxShadow: 1,
+                                            "&:hover": {
+                                                background: "linear-gradient(90deg, #1565c0 0%, #1e88e5 100%)",
+                                            },
+                                        }}
+                                    >
+                                        READ MORE &rarr;
+                                    </Button>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Box>
+                        </article>
+                    </React.Fragment>
                 ))}
 
-                {/* See More Button */}
-                <Box sx={{ textAlign: "center", mt: 4 }}>
-                    <Button
-                        variant="contained"
-                        sx={{
-                            backgroundColor: "#fff",
-                            color: "#000",
-                            borderRadius: 1,
-                            px: 4,
-                            py: 1,
-                            "&:hover": { backgroundColor: "#f0f0f0" },
-                        }}
-                    >
-                        SEE MORE
-                    </Button>
-                </Box>
+                {visibleCount < blogData.length && (
+                    <Box textAlign="center" mt={6}>
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            onClick={handleSeeMore}
+                            sx={{
+                                borderColor: "#42a5f5",
+                                color: "#42a5f5",
+                                fontWeight: 600,
+                                borderRadius: 2,
+                                px: 4,
+                                py: 1,
+                                "&:hover": {
+                                    background: "#1e88e5",
+                                    color: "#fff",
+                                    borderColor: "#1e88e5",
+                                },
+                            }}
+                        >
+                            SEE MORE
+                        </Button>
+                    </Box>
+                )}
             </Container>
         </Box>
     );

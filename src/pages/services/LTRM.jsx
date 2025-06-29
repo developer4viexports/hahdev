@@ -10,6 +10,7 @@ import strm1 from '../../assets/images/ltr/ltr1.png'
 import accordionImg from '../../assets/images/ltr/ltr2.jpg'
 import wcuImag from '../../assets/images/ltr/ltr3.jpg'
 import footerImg from '../../assets/images/ltr/ltr4.jpg'
+import { Helmet } from 'react-helmet-async';
 
 
 function LTRM() {
@@ -65,6 +66,13 @@ function LTRM() {
     ];
     return (
         <>
+            <Helmet>
+                <title>Long-Term Rental Management (LTRM) | Home Away From Home</title>
+                <meta name="description" content="Reliable long-term rental solutions including tenant screening, lease management, rent collection, and property upkeep." />
+                <meta name="keywords" content="LTRM, long term rental, property leasing, rent management, tenant screening" />
+                <link rel="canonical" href="https://thehah.ca/service/ltrm" />
+            </Helmet>
+
             <Navbar />
             <ServiceHero heading={<> Long-Term Rental<br /> Management </>} subheading="Where Long-Term Tenants Meet Long-Term Peace of Mind." bg={bg} background='#1B1C1B'
             />

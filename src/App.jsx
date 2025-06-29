@@ -16,6 +16,7 @@ import LTRM from "./pages/services/LTRM";
 import PropertyMaintenance from "./pages/services/PropertyMaintenance";
 import AirBnbCoHosting from "./pages/services/AirBnbCoHosting";
 import TenantPlacement from "./pages/services/TenantPlacement";
+import ViewBlog from "./components/ViewBlog";
 
 export default function App() {
   return (
@@ -25,19 +26,21 @@ export default function App() {
 
       <Routes>
         {/* Main pages */}
-        <Route path="/"           element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/properties" element={<OurProperties />} />
-        <Route path="/about"      element={<About />} />
-        <Route path="/blog"       element={<Blog />} />
-        <Route path="/contact"    element={<ContactUs />} />
-        <Route path="/career"     element={<Career />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/view-blog/:id" element={<ViewBlog />} />
+
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/career" element={<Career />} />
 
         {/* Service sub-pages */}
-        <Route path="/service/strm"                 element={<STRM />} />
-        <Route path="/service/ltrm"                 element={<LTRM />} />
+        <Route path="/service/strm" element={<STRM />} />
+        <Route path="/service/ltrm" element={<LTRM />} />
         <Route path="/service/property-maintenance" element={<PropertyMaintenance />} />
-        <Route path="/service/airbnb-co-hosting"    element={<AirBnbCoHosting />} />
-        <Route path="/service/tenant-placement"     element={<TenantPlacement />} />
+        <Route path="/service/airbnb-co-hosting" element={<AirBnbCoHosting />} />
+        <Route path="/service/tenant-placement" element={<TenantPlacement />} />
 
         {/* Catch-all → redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />

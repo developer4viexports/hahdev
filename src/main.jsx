@@ -1,25 +1,21 @@
 // src/index.jsx
-
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
 import App from './App.jsx';
+import './index.css';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { HelmetProvider } from 'react-helmet-async'; // ✅ Add this
 
-// ——— Fontsource imports ———
+// Fonts
 import '@fontsource/raleway/400.css';
 import '@fontsource/raleway/700.css';
 import '@fontsource/rufina/400.css';
 import '@fontsource/rufina/700.css';
 
 const theme = createTheme({
-  palette: {
-    mode: 'light',
-  },
+  palette: { mode: 'light' },
   typography: {
-    // Body copy uses Raleway
     fontFamily: ['Raleway', 'sans-serif'].join(','),
-    // Headings use Rufina
     h1: { fontFamily: ['Rufina', 'serif'].join(',') },
     h2: { fontFamily: ['Rufina', 'serif'].join(',') },
     h3: { fontFamily: ['Rufina', 'serif'].join(',') },
@@ -31,9 +27,11 @@ const theme = createTheme({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <HelmetProvider> {/* ✅ This is REQUIRED */}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </HelmetProvider>
   </StrictMode>
 );
