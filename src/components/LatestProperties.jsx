@@ -27,13 +27,13 @@ export default function LatestProperties() {
   const isSmUp = useMediaQuery(theme.breakpoints.up("xs"));
 
   const properties = [
-    {
-      id: 1,
-      title: "Cozy 2BR Retreat | Family Friendly Close to Falls",
-      rating: 4.5,
-      image: img1,
-      subtext: "Near Niagara Falls | 5 min walk",
-    },
+    // {
+    //   id: 1,
+    //   title: "Cozy 2BR Retreat | Family Friendly Close to Falls",
+    //   rating: 4.5,
+    //   image: img1,
+    //   subtext: "Near Niagara Falls | 5 min walk",
+    // },
     {
       id: 2,
       title: "Spacious 3BR Loft Downtown",
