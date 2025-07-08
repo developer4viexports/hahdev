@@ -9,41 +9,14 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import img1 from "../assets/images/service1.jpg";
-import img2 from "../assets/images/service2.jpg";
-import img3 from "../assets/images/service3.jpg";
 import { useNavigate } from "react-router-dom";
-
-// Sample blog post data
-const posts = [
-  {
-    id: 1,
-    title: "Why Niagara Falls is a Hotspot for STR & Investment Properties",
-    date: "June 20, 2022",
-    author: "admin",
-    commentsCount: 1,
-    image: img1,
-  },
-  {
-    id: 2,
-    title: "The Importance of Professional Property Management for Hosts",
-    date: "June 20, 2022",
-    author: "admin",
-    commentsCount: 1,
-    image: img2,
-  },
-  {
-    id: 3,
-    title: "Short-Term vs. Long-Term Rentals: Which One is More Profitable?",
-    date: "June 20, 2022",
-    author: "admin",
-    commentsCount: 1,
-    image: img3,
-  },
-];
+import blogData from "../data/blogData";
 
 export default function LatestPostsSection() {
   const navigate = useNavigate();
+
+  // Get the latest 3 blog posts
+  const latestPosts = blogData.slice(0, 3);
 
   return (
     <Box component="section" sx={{ backgroundColor: "#f9f9f9", py: { xs: 6, md: 8 } }}>
@@ -69,7 +42,7 @@ export default function LatestPostsSection() {
 
         {/* Posts Grid */}
         <Grid container spacing={4}>
-          {posts.map((post) => (
+          {latestPosts.map((post) => (
             <Grid key={post.id} item xs={12} sm={6} md={4}>
               <Card
                 sx={{
@@ -113,17 +86,29 @@ export default function LatestPostsSection() {
                 {/* Post Content */}
                 <CardContent sx={{ p: 2, display: "flex", flexDirection: "column", flexGrow: 1 }}>
                   <Typography variant="caption" sx={{ color: "#999" }}>
-                    {post.commentsCount} Comment{post.commentsCount > 1 ? "s" : ""}
+                    {post.time}
                     <span style={{ margin: "0 6px" }}>•</span>
-                    by: {post.author}
+                    by: HAH Property Management
                   </Typography>
 
-                  <Typography variant="h6" sx={{ fontWeight: 600, mt: 1, mb: 2 }}>
+                  <Typography 
+                    variant={latestPosts.indexOf(post) === 0 ? "body1" : "h6"} 
+                    sx={{ 
+                      fontWeight: 600, 
+                      mt: 1, 
+                      mb: 2,
+                      fontSize: latestPosts.indexOf(post) === 0 ? "1rem" : "1.25rem"
+                    }}
+                  >
                     {post.title}
                   </Typography>
 
+                  <Typography variant="body2" sx={{ color: "#666", mb: 2 }}>
+                    {post.excerpt}
+                  </Typography>
+
                   <Box
-                    // onClick={() => navigate("/blogs")}
+                    onClick={() => navigate("/blog")}
                     sx={{
                       mt: "auto",
                       display: "flex",
