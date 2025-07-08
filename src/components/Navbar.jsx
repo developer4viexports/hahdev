@@ -50,7 +50,8 @@ export default function Navbar() {
   const navLinks = [
     { text: "Home", icon: <HomeIcon />, to: "/" },
     { text: "Services", icon: <BusinessIcon />, dropdown: true },
-    { text: "Our Properties", icon: <StorefrontIcon />, to: "/properties" },
+    // { text: "Our Properties", icon: <StorefrontIcon />, to: "/properties", dropdown: true }, // Commented dropdown
+    { text: "Our Properties", icon: <StorefrontIcon />, external: true, to: "https://book.thehah.ca/all-listings" }, // External link
     { text: "Blog", icon: <BookIcon />, to: "/blog" },
     { text: "About", icon: <InfoIcon />, to: "/about" },
     { text: "Contact", icon: <LocalPhoneIcon />, to: "/contact" },
@@ -85,6 +86,36 @@ export default function Navbar() {
           {/* Desktop nav */}
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 4, alignItems: "center" }}>
             {navLinks.map(item =>
+              // Commented out dropdown for Properties
+              // item.dropdown && item.text === "Our Properties" ? (
+              //   <React.Fragment key="properties">
+              //     <Typography
+              //       onMouseEnter={handlePropertiesMenuOpen}
+              //       onClick={handlePropertiesMenuOpen}
+              //       sx={{ cursor: "pointer", color: "inherit" }}
+              //     >
+              //       {item.text}
+              //     </Typography>
+              //     <Menu
+              //       anchorEl={propertiesAnchorEl}
+              //       open={Boolean(propertiesAnchorEl)}
+              //       onClose={handlePropertiesMenuClose}
+              //       MenuListProps={{ onMouseLeave: handlePropertiesMenuClose }}
+              //     >
+              //       {propertiesSubLinks.map(link => (
+              //         <MenuItem
+              //           key={link.text}
+              //           component={RouterLink}
+              //           to={link.to}
+              //           onClick={handlePropertiesMenuClose}
+              //           sx={{ padding: "10px" }}
+              //         >
+              //           {link.text}
+              //         </MenuItem>
+              //       ))}
+              //     </Menu>
+              //   </React.Fragment>
+              // ) :
               item.dropdown ? (
                 <React.Fragment key="services">
                   <Typography
@@ -113,6 +144,17 @@ export default function Navbar() {
                     ))}
                   </Menu>
                 </React.Fragment>
+              ) : item.external ? (
+                <Typography
+                  key={item.text}
+                  component="a"
+                  href={item.to}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+                >
+                  {item.text}
+                </Typography>
               ) : (
                 <Typography
                   key={item.text}
@@ -236,8 +278,10 @@ export default function Navbar() {
             {navLinks.filter(item => !item.dropdown && item.text !== 'Home').map(item => (
               <ListItem key={item.text} disablePadding>
                 <ListItemButton
-                  component={RouterLink}
-                  to={item.to}
+                  component={item.external ? "a" : RouterLink}
+                  {...(item.external
+                    ? { href: item.to, target: "_blank", rel: "noopener noreferrer" }
+                    : { to: item.to })}
                   onClick={toggleDrawer(false)}
                   sx={{
                     py: 1.5,

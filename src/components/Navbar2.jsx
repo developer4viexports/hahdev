@@ -50,10 +50,12 @@ export default function Navbar2() {
         { text: "Tenant Placement", to: "/service/tenant-placement", icon: <ChevronRightIcon /> },
     ];
 
+    // Update navLinks: comment out dropdown for "Our Properties" and add external link instead
     const navLinks = [
         { text: "Home", icon: <HomeIcon />, to: "/" },
         { text: "Services", icon: <BusinessIcon />, dropdown: true },
-        { text: "Our Properties", icon: <StorefrontIcon />, to: "/properties" },
+        // { text: "Our Properties", icon: <StorefrontIcon />, to: "/properties", dropdown: true }, // Commented dropdown
+        { text: "Our Properties", icon: <StorefrontIcon />, external: true, to: "https://book.thehah.ca/all-listings" }, // External link
         { text: "Blog", icon: <BookIcon />, to: "/blog" },
         { text: "About", icon: <InfoIcon />, to: "/about" },
         { text: "Contact", icon: <LocalPhoneIcon />, to: "/contact" },
@@ -70,6 +72,35 @@ export default function Navbar2() {
                     {/* Desktop Navigation */}
                     <Box sx={{ display: { xs: "none", md: "flex" }, gap: { xs: 2, sm: 3, md: 5 }, alignItems: 'center' }}>
                         {navLinks.map(item =>
+                            // Commented out dropdown for Properties
+                            // item.dropdown && item.text === "Our Properties" ? (
+                            //     <React.Fragment key="properties-menu">
+                            //         <Typography
+                            //             onMouseEnter={handlePropertiesMenuOpen}
+                            //             onClick={handlePropertiesMenuOpen}
+                            //             sx={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+                            //         >
+                            //             {item.text}
+                            //         </Typography>
+                            //         <Menu
+                            //             anchorEl={propertiesAnchorEl}
+                            //             open={Boolean(propertiesAnchorEl)}
+                            //             onClose={handlePropertiesMenuClose}
+                            //             MenuListProps={{ onMouseLeave: handlePropertiesMenuClose }}
+                            //         >
+                            //             {propertiesSubLinks.map(link => (
+                            //                 <MenuItem
+                            //                     key={link.text}
+                            //                     component={RouterLink}
+                            //                     to={link.to}
+                            //                     onClick={handlePropertiesMenuClose}
+                            //                 >
+                            //                     {link.text}
+                            //                 </MenuItem>
+                            //             ))}
+                            //         </Menu>
+                            //     </React.Fragment>
+                            // ) :
                             item.dropdown ? (
                                 <React.Fragment key="services-menu">
                                     <Typography
@@ -97,6 +128,18 @@ export default function Navbar2() {
                                         ))}
                                     </Menu>
                                 </React.Fragment>
+                            ) : item.external ? (
+                                <Typography
+                                    key={item.text}
+                                    component="a"
+                                    href={item.to}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    variant="body1"
+                                    sx={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+                                >
+                                    {item.text}
+                                </Typography>
                             ) : (
                                 <Typography
                                     key={item.text}
@@ -155,6 +198,52 @@ export default function Navbar2() {
                         </ListSubheader>
 
                         {navLinks.map(item =>
+                            // Commented out dropdown for Properties in mobile drawer
+                            // item.dropdown && item.text === "Our Properties" ? (
+                            //     <React.Fragment key="mobile-properties">
+                            //         <ListItemButton
+                            //             onClick={toggleMobileProperties}
+                            //             sx={{
+                            //                 py: 1.5,
+                            //                 "&:hover": { bgcolor: "rgba(255,255,255,0.1)" },
+                            //                 "&.Mui-selected": { bgcolor: "rgba(255,255,255,0.2)" },
+                            //             }}
+                            //         >
+                            //             <ListItemIcon sx={{ color: "#fff", minWidth: 40 }}>
+                            //                 <StorefrontIcon />
+                            //             </ListItemIcon>
+                            //             <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: "1rem" }} />
+                            //             {mobilePropertiesOpen ? <ExpandLess sx={{ color: '#fff' }} /> : <ExpandMore sx={{ color: '#fff' }} />}
+                            //         </ListItemButton>
+                            //         <Collapse in={mobilePropertiesOpen} timeout="auto" unmountOnExit sx={{ transition: "all 0.3s ease" }}>
+                            //             <List component="div" disablePadding>
+                            //                 {propertiesSubLinks.map(link => (
+                            //                     <ListItem key={link.text} disablePadding>
+                            //                         <ListItemButton
+                            //                             component={RouterLink}
+                            //                             to={link.to}
+                            //                             onClick={toggleDrawer(false)}
+                            //                             sx={{
+                            //                                 py: 1,
+                            //                                 pl: 6,
+                            //                                 "&:hover": { bgcolor: "rgba(255,255,255,0.1)" },
+                            //                                 "&.Mui-selected": { bgcolor: "rgba(255,255,255,0.2)" },
+                            //                             }}
+                            //                         >
+                            //                             <ListItemIcon sx={{ color: "#ccc", minWidth: 30 }}>
+                            //                                 {link.icon}
+                            //                             </ListItemIcon>
+                            //                             <ListItemText
+                            //                                 primary={link.text}
+                            //                                 primaryTypographyProps={{ fontSize: "0.95rem", color: "#ddd" }}
+                            //                             />
+                            //                         </ListItemButton>
+                            //                     </ListItem>
+                            //                 ))}
+                            //             </List>
+                            //         </Collapse>
+                            //     </React.Fragment>
+                            // ) :
                             item.dropdown ? (
                                 <React.Fragment key="mobile-services">
                                     <ListItemButton
@@ -199,6 +288,26 @@ export default function Navbar2() {
                                         </List>
                                     </Collapse>
                                 </React.Fragment>
+                            ) : item.external ? (
+                                <ListItem key={item.text} disablePadding>
+                                    <ListItemButton
+                                        component="a"
+                                        href={item.to}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={toggleDrawer(false)}
+                                        sx={{
+                                            py: 1.5,
+                                            "&:hover": { bgcolor: "rgba(255,255,255,0.1)" },
+                                            "&.Mui-selected": { bgcolor: "rgba(255,255,255,0.2)" },
+                                        }}
+                                    >
+                                        <ListItemIcon sx={{ color: "#fff", minWidth: 40 }}>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: "1rem" }} />
+                                    </ListItemButton>
+                                </ListItem>
                             ) : (
                                 <ListItem key={item.text} disablePadding>
                                     <ListItemButton
