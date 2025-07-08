@@ -45,7 +45,7 @@ export default function Navbar2() {
     const serviceSubLinks = [
         { text: "Short-Term Rental Management (STR)", to: "/service/strm", icon: <ChevronRightIcon /> },
         { text: "Long-Term Rental Management (LTR)", to: "/service/ltrm", icon: <ChevronRightIcon /> },
-        { text: "Property Maintenance", to: "/service/property-maintenance", icon : <ChevronRightIcon /> },
+        { text: "Property Maintenance", to: "/service/property-maintenance", icon: <ChevronRightIcon /> },
         { text: "Airbnb Co-Hosting", to: "/service/airbnb-co-hosting", icon: <ChevronRightIcon /> },
         { text: "Tenant Placement", to: "/service/tenant-placement", icon: <ChevronRightIcon /> },
     ];

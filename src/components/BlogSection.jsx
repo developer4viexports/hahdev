@@ -32,6 +32,9 @@ export default function BlogSection() {
                     mb={4}
                     fontWeight={700}
                     textAlign="center"
+                    sx={{
+                        fontSize: { xs: "1.5rem", sm: "2rem", md: "2.25rem" } // Smaller on mobile
+                    }}
                 >
                     Latest Blog Posts
                 </Typography>

@@ -150,7 +150,15 @@ export default function ViewBlog() {
                         }}
                     />
 
-                    <Typography variant="h3" fontWeight={700} gutterBottom sx={{ color: "#1e293b" }}>
+                    <Typography
+                        variant="h3"
+                        fontWeight={700}
+                        gutterBottom
+                        sx={{
+                            color: "#1e293b",
+                            fontSize: { xs: "2rem", sm: "2rem", md: "3rem" } // Decreased size on mobile
+                        }}
+                    >
                         {blog.title}
                     </Typography>
 
