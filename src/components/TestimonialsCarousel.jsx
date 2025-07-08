@@ -75,7 +75,7 @@ function PrevArrow(props) {
 const testimonials = [
   {
     id: 1,
-    name: "Rohit Sharma",
+    name: "James Lee",
     rating: 5,
     review:
       "Working with Home Away From Home Developments Inc. has been a game-changer. Our Niagara Falls property started earning \$1200+ per night, and they took care of everything — cleaning, staging, and guest support. Total peace of mind.",
@@ -124,30 +124,30 @@ const testimonials = [
 ];
 
 export default function TestimonialsCarousel() {
-   const theme = useTheme();
-    const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-    const isSmUp = useMediaQuery(theme.breakpoints.up("xs"));
-  
-    const settings = {
-      infinite: true,
-      speed: 400,
-      slidesToShow: isMdUp ? 1 : isSmUp ? 1 : 1,
-      slidesToScroll: 1,
-      arrows: isMdUp, // Show arrows only on desktop
-      dots: !isMdUp, // Show dots on mobile
-      centerMode: !isMdUp, // Center items in mobile view
-      centerPadding: "20px",
-      responsive: [
-        {
-          breakpoint: theme.breakpoints.values.md,
-          settings: { slidesToShow: 2, arrows: false, dots: true },
-        },
-        {
-          breakpoint: theme.breakpoints.values.sm,
-          settings: { slidesToShow: 1, arrows: false, dots: true },
-        },
-      ],
-    };
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isSmUp = useMediaQuery(theme.breakpoints.up("xs"));
+
+  const settings = {
+    infinite: true,
+    speed: 400,
+    slidesToShow: isMdUp ? 1 : isSmUp ? 1 : 1,
+    slidesToScroll: 1,
+    arrows: isMdUp, // Show arrows only on desktop
+    dots: !isMdUp, // Show dots on mobile
+    centerMode: !isMdUp, // Center items in mobile view
+    centerPadding: "20px",
+    responsive: [
+      {
+        breakpoint: theme.breakpoints.values.md,
+        settings: { slidesToShow: 2, arrows: false, dots: true },
+      },
+      {
+        breakpoint: theme.breakpoints.values.sm,
+        settings: { slidesToShow: 1, arrows: false, dots: true },
+      },
+    ],
+  };
 
   return (
     <Box sx={{ backgroundColor: "#000", color: "#fff", py: { xs: 6, md: 8 } }}>
