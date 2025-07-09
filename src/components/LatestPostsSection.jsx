@@ -108,7 +108,7 @@ export default function LatestPostsSection() {
                   </Typography>
 
                   <Box
-                    onClick={() => navigate("/blog")}
+                    onClick={() => navigate(`/view-blog/${post.id}`)}
                     sx={{
                       mt: "auto",
                       display: "flex",
